@@ -19,7 +19,7 @@ public class PostEntity {
     private Long id;
     private Long boardId;
     private String userName;
-    private int password;
+    private String password;
     private String status;
     private String title;
     @Column(columnDefinition = "TEXT")
