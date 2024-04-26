@@ -4,6 +4,7 @@ import com.example.myboard.post.db.PostEntity;
 import com.example.myboard.post.db.PostRepository;
 import com.example.myboard.post.model.PostRequest;
 import com.example.myboard.post.model.PostViewRequest;
+import com.example.myboard.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final ReplyService replyService;
     public PostEntity create(PostRequest postRequest) {
         var entity = PostEntity.builder()
                 .boardId(1L) //임시 고정값
@@ -43,7 +45,15 @@ public class PostService {
                        var format = "비밀번호가 맞지 않습니다. %s vs %s ";
                        throw new RuntimeException(String.format(format,it.getPassword(), postViewRequest.getPassword()));
                    }
+
+                   //답변 같이 보여주기
+                   var replyList = replyService.findAllByPostId(it.getId());
+                   it.setReplyList(replyList);
+
                    return  it; //맞는다면 해당 entity  리턴
+
+
+
 
                }).orElseThrow( //데이터가 없다면
                        ()->{

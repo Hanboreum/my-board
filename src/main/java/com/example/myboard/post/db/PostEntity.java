@@ -1,9 +1,12 @@
 package com.example.myboard.post.db;
 
+import com.example.myboard.reply.db.ReplyEntity;
+import com.example.myboard.reply.db.ReplyRepository;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +28,7 @@ public class PostEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime postedAt;
+
+    @Transient //db컬럼으로 인식하지 못하게
+    private List<ReplyEntity> replyList = List.of();// 빈 리스트를 기본으로
 }
