@@ -35,7 +35,7 @@ public class PostService {
      * 비밀번호
      */
     public PostEntity view(PostViewRequest postViewRequest) {
-       return postRepository.findById(postViewRequest.getPostId())
+       return postRepository.findFirstByIdAndStatusOrderByIdDesc(postViewRequest.getPostId(),"REGISTERED") //registered된 것만 select
                .map( it->{
                    //entity가 존재 할때만
                    if(! it.getPassword().equals(postViewRequest.getPassword())){
