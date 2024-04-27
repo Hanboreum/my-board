@@ -14,7 +14,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-
 public class ReplyRequest {
 
     @NotNull

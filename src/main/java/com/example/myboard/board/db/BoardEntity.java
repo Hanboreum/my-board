@@ -1,6 +1,8 @@
 package com.example.myboard.board.db;
 
 import com.example.myboard.post.db.PostEntity;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @ToString
 @Builder
 @Entity(name = " board") //db의 board table과 매칭
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+
 public class BoardEntity {
 
     @Id
