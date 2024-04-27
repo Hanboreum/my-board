@@ -36,6 +36,6 @@ public class PostEntity {
     private String content;
     private LocalDateTime postedAt;
 
-    @Transient //db컬럼으로 인식하지 못하게
+    @OneToMany(mappedBy = "post")
     private List<ReplyEntity> replyList = List.of();// 빈 리스트를 기본으로
 }

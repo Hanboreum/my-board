@@ -1,5 +1,6 @@
 package com.example.myboard.reply.service;
 
+import com.example.myboard.post.db.PostRepository;
 import com.example.myboard.reply.db.ReplyEntity;
 import com.example.myboard.reply.db.ReplyRepository;
 import com.example.myboard.reply.model.ReplyRequest;
@@ -13,10 +14,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReplyService {
    private final ReplyRepository replyRepository;
+   private final PostRepository postRepository;
 
     public ReplyEntity create(ReplyRequest replyRequest){
+        var optionalPostEntity = postRepository.findById(replyRequest.getPostId());
+
+        if(optionalPostEntity.isEmpty()){ //null 일 때
+            throw  new RuntimeException("게시글이 존재하지 않습니다. "+ replyRequest.getPostId());
+        }
         var entity = ReplyEntity.builder()
-                .postId(replyRequest.getPostId())
+                .post(optionalPostEntity.get())
                 .userName(replyRequest.getUserName())
                 .password(replyRequest.getPassword())
                 .status("REGISTERED")

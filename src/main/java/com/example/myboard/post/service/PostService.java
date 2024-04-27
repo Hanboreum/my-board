@@ -17,7 +17,6 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final ReplyService replyService;
     private final BoardRepository boardRepository;
     public PostEntity create(PostRequest postRequest) {
 
@@ -50,9 +49,10 @@ public class PostService {
                        throw new RuntimeException(String.format(format,it.getPassword(), postViewRequest.getPassword()));
                    }
 
-                   //답변 같이 보여주기
-                   var replyList = replyService.findAllByPostId(it.getId());
-                   it.setReplyList(replyList);
+                   //답변 같이 보여주기.
+                   // @OneToMany를 통해 자동으로 list를 보내 주므로 필요없어짐
+                   //var replyList = replyService.findAllByPostId(it.getId());
+                   //it.setReplyList(replyList);
 
                    return  it; //맞는다면 해당 entity  리턴
 
