@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.Where;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class BoardEntity {
     //board 를 select하게 되면 postEntity가 내려오게 된다.
     @Where(clause = "status = 'REGISTERED'") //clause = 조건절
     //@Builder.Default 나는 없어도 됨
+    @OrderBy(clause = "id desc") //아이디 최신순 정렬
     private List<PostEntity> postList = List.of();
 
 }
