@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -28,6 +29,8 @@ public class BoardEntity {
     @OneToMany(mappedBy = "board") //1:N 관계를 나타내는 것.
     //board는 postEntity에 있는 변수를 나타낸다.
     //board 를 select하게 되면 postEntity가 내려오게 된다.
+    @Where(clause = "status = 'REGISTERED'") //clause = 조건절
+    //@Builder.Default 나는 없어도 됨
     private List<PostEntity> postList = List.of();
 
 }
