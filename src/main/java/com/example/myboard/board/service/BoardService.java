@@ -18,4 +18,8 @@ public class BoardService {
                 .build();
         return boardRepository.save(entity);
     }
+
+    public BoardEntity view(Long id) {
+        return boardRepository.findById(id).get();
+    }
 }

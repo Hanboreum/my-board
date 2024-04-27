@@ -1,5 +1,6 @@
 package com.example.myboard.post.service;
 
+import com.example.myboard.board.db.BoardRepository;
 import com.example.myboard.post.db.PostEntity;
 import com.example.myboard.post.db.PostRepository;
 import com.example.myboard.post.model.PostRequest;
@@ -17,9 +18,12 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final ReplyService replyService;
+    private final BoardRepository boardRepository;
     public PostEntity create(PostRequest postRequest) {
+
+        var boardEntity = boardRepository.findById(postRequest.getBoardId()).get();//임시 고정값
         var entity = PostEntity.builder()
-                .boardId(1L) //임시 고정값
+                .board(boardEntity)
                 .userName(postRequest.getUserName())
                 .password(postRequest.getPassword())
                 .status("REGISTERED") //등록됨
@@ -41,7 +45,7 @@ public class PostService {
                .map( it->{
                    //entity가 존재 할때만
                    if(! it.getPassword().equals(postViewRequest.getPassword())){
-                       //db에 있는 post의 pw와 입력 받은 post의 pw를 비교해 동일하지 않다면
+                       //db에 있는 post의 pw와 입력 받은 post의 pw를ㄲㄷ 비교해 동일하지 않다면
                        var format = "비밀번호가 맞지 않습니다. %s vs %s ";
                        throw new RuntimeException(String.format(format,it.getPassword(), postViewRequest.getPassword()));
                    }
