@@ -1,4 +1,4 @@
-package com.example.myboard.board.common;
+package com.example.myboard.common;
 
 import lombok.*;
 
@@ -14,5 +14,5 @@ public class Pagination {
     private Integer size; //
     private Integer currentElements; //현재 가지고 있는 엘리먼트
     private Integer totalPage;
-    private Integer totalElements;
+    private Long totalElements;
 }

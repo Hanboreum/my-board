@@ -1,12 +1,15 @@
 package com.example.myboard.post.service;
 
 import com.example.myboard.board.db.BoardRepository;
+import com.example.myboard.common.Api;
+import com.example.myboard.common.Pagination;
 import com.example.myboard.post.db.PostEntity;
 import com.example.myboard.post.db.PostRepository;
 import com.example.myboard.post.model.PostRequest;
 import com.example.myboard.post.model.PostViewRequest;
 import com.example.myboard.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,10 +17,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
+public class  PostService {
 
     private final PostRepository postRepository;
     private final BoardRepository boardRepository;
+
     public PostEntity create(PostRequest postRequest) {
 
         var boardEntity = boardRepository.findById(postRequest.getBoardId()).get();//임시 고정값
@@ -66,8 +70,20 @@ public class PostService {
                );
     }
 
-    public List<PostEntity> all() {
-        return postRepository.findAll();
+    public Api<List<PostEntity>> all(Pageable pageable) {
+        var list =  postRepository.findAll(pageable);
+        var pagination = Pagination.builder()
+            .page(list.getNumber()) //현재 몇번째 페이지에 있는지
+            .size(list.getSize())
+            .currentElements(list.getNumberOfElements()) // 해당 페이지에 있는 엘리먼트 개수
+            .totalElements(list.getTotalElements())
+            .totalPage(list.getTotalPages())
+            .build();
+        var response = Api.<List<PostEntity>>builder()
+            .body(list.toList())
+            .pagination(pagination)
+            .build();
+        return response;
     }
 
     public void delete(PostViewRequest postViewRequest) {

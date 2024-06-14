@@ -4,7 +4,6 @@ import com.example.myboard.post.db.PostEntity;
 import com.example.myboard.post.model.PostDto;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class PostConverter {
 

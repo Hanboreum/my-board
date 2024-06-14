@@ -20,7 +20,6 @@ import java.util.List;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 
 public class BoardEntity {
-
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY) //
     private Long id;
@@ -34,5 +33,4 @@ public class BoardEntity {
     //@Builder.Default 나는 없어도 됨
     @OrderBy(clause = "id desc") //아이디 최신순 정렬
     private List<PostEntity> postList = List.of();
-
 }
